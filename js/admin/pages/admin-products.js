@@ -29,6 +29,15 @@ export const renderAdminProducts = async (root) => {
           <select class="admin-select admin-select-sm" id="prod-filter-cat">
             <option value="">All Categories</option>
           </select>
+          <select class="admin-select admin-select-sm" id="prod-sort">
+            <option value="">Sort: Default</option>
+            <option value="price-desc">Price: High → Low</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="stock-desc">Stock: Most</option>
+            <option value="stock-asc">Stock: Least</option>
+            <option value="on-sale">On Sale</option>
+            <option value="featured">Featured</option>
+          </select>
         </div>
         <span id="prod-count" style="font-size:13px;color:var(--admin-text-muted);"></span>
       </div>
@@ -311,25 +320,38 @@ const quickSave = async (btn, tr, id) => {
   }, 1400);
 };
 
-// ─── Search / filter ────────────────────────────────────────────────────────
+// ─── Search / filter / sort ─────────────────────────────────────────────────
 const bindSearch = (root) => {
   const searchInput = root.querySelector('#prod-search');
   const catSelect   = root.querySelector('#prod-filter-cat');
+  const sortSelect  = root.querySelector('#prod-sort');
 
   const filter = () => {
-    const q   = searchInput.value.trim().toLowerCase();
-    const cat = catSelect.value;
-    const filtered = allProducts.filter(p => {
+    const q    = searchInput.value.trim().toLowerCase();
+    const cat  = catSelect.value;
+    const sort = sortSelect.value;
+
+    let result = allProducts.filter(p => {
       const matchName = !q || p.name.toLowerCase().includes(q);
       const matchCat  = !cat || String(p.categories?.id) === cat ||
                         String(p.category_id) === cat;
-      return matchName && matchCat;
+      const matchSort = sort === 'on-sale' ? p.is_on_sale
+                      : sort === 'featured' ? p.is_featured
+                      : true;
+      return matchName && matchCat && matchSort;
     });
-    renderTable(root, filtered);
+
+    if (sort === 'price-desc')  result = [...result].sort((a, b) => b.price - a.price);
+    if (sort === 'price-asc')   result = [...result].sort((a, b) => a.price - b.price);
+    if (sort === 'stock-desc')  result = [...result].sort((a, b) => b.stock - a.stock);
+    if (sort === 'stock-asc')   result = [...result].sort((a, b) => a.stock - b.stock);
+
+    renderTable(root, result);
   };
 
   searchInput.addEventListener('input', filter);
   catSelect.addEventListener('change', filter);
+  sortSelect.addEventListener('change', filter);
 };
 
 // ─── Populate modal category dropdown ──────────────────────────────────────
