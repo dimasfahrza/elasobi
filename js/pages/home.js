@@ -145,7 +145,7 @@ export const productCardHTML = (p, inWishlist = false) => {
         </a>
         ${p.is_on_sale ? '<span class="sale-badge">SALE</span>' : ''}
         <button class="wishlist-toggle ${inWishlist ? 'active' : ''}" data-action="wishlist" aria-label="Wishlist">
-          <i class="fas fa-heart"></i>
+          <i class="${inWishlist ? 'fas' : 'far'} fa-heart"></i>
         </button>
       </div>
       <div class="product-card-body">
@@ -173,6 +173,7 @@ export const bindGridActions = (root) => {
         const result = await toggleWishlist(p);
         if (result?.loginRequired) { showLoginRequiredModal(); return; }
         e.currentTarget.classList.toggle('active', result);
+        e.currentTarget.querySelector('i').className = result ? 'fas fa-heart' : 'far fa-heart';
         showToast(result ? 'Added to wishlist' : 'Removed from wishlist', 'success');
       }
     });
