@@ -63,6 +63,20 @@
     </nav>
   </header>
 
+  <!-- Admin shortcut — only visible for admin users -->
+  <a id="admin-shortcut" href="admin.html" hidden style="
+    position:fixed;bottom:76px;right:20px;z-index:1000;
+    background:#6c63ff;color:#fff;
+    padding:9px 18px;border-radius:50px;
+    font-size:13px;font-weight:600;
+    box-shadow:0 4px 16px rgba(108,99,255,.45);
+    display:none;align-items:center;gap:7px;
+    text-decoration:none;transition:transform .15s,box-shadow .15s;
+  " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(108,99,255,.55)'"
+     onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(108,99,255,.45)'">
+    <i class="fas fa-tools"></i> Admin Dashboard
+  </a>
+
   <!-- ============ MOBILE NAV DRAWER ============ -->
   <div class="mobile-drawer" id="mobile-drawer">
     <div class="mobile-drawer-inner">

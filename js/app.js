@@ -1,4 +1,4 @@
-import { initAuth, isLoggedIn, onAuthChange } from './auth.js';
+import { initAuth, isLoggedIn, onAuthChange, checkAdminRole } from './auth.js';
 import { fetchCategories } from './products.js';
 import { getCartCount, onCartChange } from './cart.js';
 import { getWishlistCount, onWishlistChange } from './wishlist.js';
@@ -226,10 +226,19 @@ const setupScrollTop = () => {
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 };
 
+// ============ ADMIN SHORTCUT ============
+const updateAdminShortcut = async () => {
+  const el = document.getElementById('admin-shortcut');
+  if (!el) return;
+  const isAdmin = isLoggedIn() && await checkAdminRole();
+  el.hidden = !isAdmin;
+  el.style.display = isAdmin ? 'flex' : 'none';
+};
+
 // ============ INIT ============
 const init = async () => {
   await initAuth();
-  onAuthChange(refreshBadges);
+  onAuthChange(async () => { await refreshBadges(); await updateAdminShortcut(); });
   onCartChange(refreshBadges);
   onWishlistChange(refreshBadges);
   await setupHeader();
@@ -237,6 +246,7 @@ const init = async () => {
   window.addEventListener('hashchange', router);
   await router();
   await refreshBadges();
+  await updateAdminShortcut();
 };
 
 init().catch(err => {
