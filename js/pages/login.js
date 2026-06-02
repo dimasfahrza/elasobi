@@ -41,6 +41,13 @@ const bindForm = (root, mode) => {
     const errEl    = root.querySelector('#auth-error');
 
     errEl.hidden  = true;
+
+    if (mode === 'register' && !/^[a-zA-Z\s]+$/.test(fullName)) {
+      errEl.textContent = 'Full name must contain letters only.';
+      errEl.hidden = false;
+      return;
+    }
+
     btn.disabled  = true;
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Please wait...';
 
