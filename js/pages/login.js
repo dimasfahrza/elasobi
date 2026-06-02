@@ -28,6 +28,9 @@ const renderForm = (mode) => `
         ? 'New here? <a href="#" id="toggle-mode">Create an account</a>'
         : 'Already have an account? <a href="#" id="toggle-mode">Sign in</a>'}
     </p>
+    <a href="#/" style="display:block;text-align:center;margin-top:16px;font-size:14px;color:var(--text-muted);">
+      <i class="fas fa-arrow-left" style="margin-right:6px;"></i>Back to Store
+    </a>
   </section>`;
 
 const bindForm = (root, mode) => {
