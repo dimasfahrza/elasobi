@@ -502,11 +502,15 @@ const saveProduct = async (root) => {
   const payload = { name, slug, description, price, sale_price, category_id,
                     stock, image_url, is_on_sale, is_featured };
 
-  let error;
+  let savedProduct, error;
   if (editingId) {
-    ({ error } = await supabase.from('products').update(payload).eq('id', editingId));
+    ({ data: savedProduct, error } = await supabase
+      .from('products').update(payload).eq('id', editingId)
+      .select('*, categories(id,name)').single());
   } else {
-    ({ error } = await supabase.from('products').insert(payload));
+    ({ data: savedProduct, error } = await supabase
+      .from('products').insert(payload)
+      .select('*, categories(id,name)').single());
   }
 
   if (error) {
@@ -516,9 +520,17 @@ const saveProduct = async (root) => {
     return;
   }
 
+  // Update local array without re-fetching all products
+  if (editingId) {
+    const idx = allProducts.findIndex(p => p.id === editingId);
+    if (idx !== -1) allProducts[idx] = savedProduct;
+  } else {
+    allProducts.unshift(savedProduct);
+  }
+
   showAdminToast(editingId ? 'Product updated' : 'Product added', 'success');
   closeModal(root);
-  await loadProducts(root);
+  renderTable(root, allProducts);
 
   // Re-apply current search/filter
   root.querySelector('#prod-search').dispatchEvent(new Event('input'));
@@ -561,8 +573,10 @@ const bindDeleteModal = (root) => {
 
     showAdminToast('Product deleted', 'success');
     closeDeleteModal(root);
-    await loadProducts(root);
 
+    // Remove from local array without re-fetching
+    allProducts = allProducts.filter(p => p.id !== deleteId);
+    renderTable(root, allProducts);
     root.querySelector('#prod-search').dispatchEvent(new Event('input'));
   });
 };
