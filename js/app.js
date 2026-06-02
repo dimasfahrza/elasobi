@@ -26,6 +26,49 @@ export const showToast = (msg, type = '') => {
 // ============ NAVIGATE ============
 export const navigate = (path) => { location.hash = '#' + path; };
 
+// ============ LOGIN REQUIRED MODAL ============
+export const showLoginRequiredModal = () => {
+  const existing = document.getElementById('login-required-modal');
+  if (existing) existing.remove();
+
+  const overlay = document.createElement('div');
+  overlay.id = 'login-required-modal';
+  overlay.style.cssText = `
+    position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:9999;
+    display:flex;align-items:center;justify-content:center;padding:16px;
+  `;
+
+  overlay.innerHTML = `
+    <div style="
+      background:#fff;border-radius:16px;padding:32px 28px;max-width:360px;width:100%;
+      text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);
+    ">
+      <div style="font-size:40px;margin-bottom:12px;">🤍</div>
+      <h3 style="font-size:18px;font-weight:700;margin-bottom:8px;color:#1a1a1a;">Sign in to use Wishlist</h3>
+      <p style="font-size:14px;color:#666;margin-bottom:24px;line-height:1.5;">
+        Create an account or sign in to save your favourite products.
+      </p>
+      <div style="display:flex;gap:10px;justify-content:center;">
+        <button id="lrm-cancel" style="
+          padding:10px 20px;border-radius:50px;border:1px solid #ddd;
+          background:#fff;font-size:14px;cursor:pointer;font-weight:500;
+        ">Continue Browsing</button>
+        <a href="#/login" id="lrm-login" style="
+          padding:10px 24px;border-radius:50px;background:#6c63ff;color:#fff;
+          font-size:14px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;
+        ">Sign In</a>
+      </div>
+    </div>
+  `;
+
+  const close = () => overlay.remove();
+  overlay.querySelector('#lrm-cancel').addEventListener('click', close);
+  overlay.querySelector('#lrm-login').addEventListener('click', close);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+  document.body.appendChild(overlay);
+};
+
 // Section to scroll to after next route render (null = scroll to top)
 let _scrollTarget = null;
 

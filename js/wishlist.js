@@ -47,6 +47,7 @@ export const removeFromWishlist = async (idOrProductId, byProductId = false) => 
 };
 
 export const toggleWishlist = async (product) => {
+  if (!isLoggedIn()) return { loginRequired: true };
   const inList = await isInWishlist(product.id);
   if (inList) await removeFromWishlist(product.id, true);
   else await addToWishlist(product);

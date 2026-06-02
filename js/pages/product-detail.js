@@ -1,7 +1,7 @@
 import { fetchProductById, formatPrice } from '../products.js';
 import { addToCart } from '../cart.js';
 import { toggleWishlist, isInWishlist } from '../wishlist.js';
-import { showToast } from '../app.js';
+import { showToast, showLoginRequiredModal } from '../app.js';
 
 export const renderProductDetail = async (root, id) => {
   root.innerHTML = `<div class="loader"></div>`;
@@ -48,9 +48,10 @@ export const renderProductDetail = async (root, id) => {
     showToast(`${p.name} added to cart`, 'success');
   });
   root.querySelector('#btn-wish').addEventListener('click', async (e) => {
-    const added = await toggleWishlist(p);
-    showToast(added ? 'Added to wishlist' : 'Removed from wishlist', 'success');
-    e.currentTarget.className = `add-wishlist ${added ? 'active' : ''}`;
-    e.currentTarget.innerHTML = `<i class="${added ? 'fas' : 'far'} fa-heart"></i> ${added ? 'In wishlist' : 'Add to wishlist'}`;
+    const result = await toggleWishlist(p);
+    if (result?.loginRequired) { showLoginRequiredModal(); return; }
+    showToast(result ? 'Added to wishlist' : 'Removed from wishlist', 'success');
+    e.currentTarget.className = `add-wishlist ${result ? 'active' : ''}`;
+    e.currentTarget.innerHTML = `<i class="${result ? 'fas' : 'far'} fa-heart"></i> ${result ? 'In wishlist' : 'Add to wishlist'}`;
   });
 };

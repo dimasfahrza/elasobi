@@ -1,7 +1,7 @@
 import { fetchProducts, fetchProductById, formatPrice } from '../products.js';
 import { addToCart } from '../cart.js';
 import { toggleWishlist, isInWishlist } from '../wishlist.js';
-import { showToast } from '../app.js';
+import { showToast, showLoginRequiredModal } from '../app.js';
 import { supabase } from '../supabase.js';
 
 export const renderHome = async (root) => {
@@ -170,9 +170,10 @@ export const bindGridActions = (root) => {
       e.preventDefault(); e.stopPropagation();
       const p = await fetchProductById(id);
       if (p) {
-        const added = await toggleWishlist(p);
-        e.currentTarget.classList.toggle('active', added);
-        showToast(added ? 'Added to wishlist' : 'Removed from wishlist', 'success');
+        const result = await toggleWishlist(p);
+        if (result?.loginRequired) { showLoginRequiredModal(); return; }
+        e.currentTarget.classList.toggle('active', result);
+        showToast(result ? 'Added to wishlist' : 'Removed from wishlist', 'success');
       }
     });
   });
