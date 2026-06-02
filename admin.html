@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elasobi Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+  <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="admin-logo">
+      <span class="logo-mark">E</span>
+      <div>
+        <div class="logo-name">Elasobi</div>
+        <div class="logo-sub">Admin Panel</div>
+      </div>
+    </div>
+
+    <nav class="admin-nav">
+      <a href="#/dashboard" data-route="/dashboard">
+        <i class="fas fa-chart-line"></i> Dashboard
+      </a>
+      <a href="#/products" data-route="/products">
+        <i class="fas fa-box"></i> Products
+      </a>
+      <a href="#/orders" data-route="/orders">
+        <i class="fas fa-receipt"></i> Orders
+      </a>
+      <a href="#/refunds" data-route="/refunds">
+        <i class="fas fa-undo"></i> Refunds
+      </a>
+      <a href="#/messages" data-route="/messages">
+        <i class="fas fa-envelope"></i> Messages
+      </a>
+    </nav>
+
+    <div class="admin-sidebar-footer">
+      <button id="admin-logout-btn" class="admin-logout">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+      <a href="index.html" class="admin-storefront-link">
+        <i class="fas fa-external-link-alt"></i> View Storefront
+      </a>
+    </div>
+  </aside>
+
+  <main id="admin-app" class="admin-main"></main>
+
+  <div id="admin-toast" class="admin-toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/admin/admin-app.js"></script>
+</body>
+</html>

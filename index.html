@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elasobi - Authentic Apple Products</title>
+  <meta name="description" content="Elasobi specializes in selling authentic Apple Products" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <div class="header-top">
+      <a href="#/" class="logo">Elasobi</a>
+
+      <form class="search-form" id="search-form" role="search">
+        <input type="text" id="search-input" placeholder="Search for anything..." autocomplete="off" />
+        <button type="submit" aria-label="Search"><i class="fas fa-search"></i></button>
+      </form>
+
+      <div class="header-right">
+        <div class="header-contact">
+          <a href="#/about" class="contact-link" id="contact-now-link">Contact Now</a>
+        </div>
+        <div class="header-icons">
+          <a href="#/account" class="icon-link" aria-label="Account"><i class="fas fa-user"></i></a>
+          <a href="#/wishlist" class="icon-link" aria-label="Wishlist">
+            <i class="fas fa-heart"></i>
+            <span class="badge" id="wishlist-badge" hidden>0</span>
+          </a>
+          <a href="#/cart" class="icon-link" aria-label="Cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="badge" id="cart-badge" hidden>0</span>
+          </a>
+        </div>
+        <button class="hamburger-btn" id="hamburger-btn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <div class="header-nav-inner">
+        <div class="category-dropdown">
+          <button class="category-btn" id="category-btn">
+            <span>Select a category</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <button class="category-go" id="category-go" aria-label="Go">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <ul class="category-menu" id="category-menu" hidden></ul>
+        </div>
+
+        <ul class="main-menu">
+          <li><a href="#/" data-route="/">Home</a></li>
+          <li><a href="#/about" data-route="/about">About Us</a></li>
+          <li><a href="#/products" data-route="/products">Products</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ============ MOBILE NAV DRAWER ============ -->
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-inner">
+      <ul class="mobile-nav-links">
+        <li><a href="#/" id="mn-home"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#/about" id="mn-about"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a href="#/products" id="mn-products"><i class="fas fa-box"></i> Products</a></li>
+        <li><a href="#/account" id="mn-account"><i class="fas fa-user"></i> Account</a></li>
+        <li><a href="#/wishlist" id="mn-wishlist"><i class="fas fa-heart"></i> Wishlist</a></li>
+        <li><a href="#/cart" id="mn-cart"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ MAIN APP ============ -->
+  <main id="app"></main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="footer-grid container">
+      <div class="footer-col">
+        <h3>About Elasobi Ecommerce</h3>
+        <p>At Elasobi, we specializes in selling authentic Apple Products</p>
+      </div>
+      <div class="footer-col">
+        <h3>Contact Us</h3>
+        <ul class="contact-list">
+          <li><i class="fas fa-phone"></i> +886 987123213</li>
+          <li><i class="fas fa-envelope"></i> elasobi@example.com</li>
+          <li><i class="far fa-clock"></i> Mon-Sat 9 AM-6 PM <strong>SUNDAY</strong> – <strong>CLOSED</strong></li>
+          <li><i class="fas fa-map-marker-alt"></i> Elasobi HQ, Taiwan</li>
+        </ul>
+        <div class="social-icons">
+          <a href="#" aria-label="Facebook"  class="social facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram" class="social instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"   class="social twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="WhatsApp"  class="social whatsapp"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="YouTube"   class="social youtube"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3>Useful Links</h3>
+        <ul class="footer-links">
+          <li><a href="#/">Home</a></li>
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/products">Products</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Copyright &copy; 2026, Elasobi</p>
+    </div>
+  </footer>
+
+  <button id="scroll-top" class="scroll-top" aria-label="Top"><i class="fas fa-chevron-up"></i></button>
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
