@@ -168,12 +168,13 @@ export const bindGridActions = (root) => {
     });
     card.querySelector('[data-action="wishlist"]')?.addEventListener('click', async (e) => {
       e.preventDefault(); e.stopPropagation();
+      const btn = e.currentTarget;
       const p = await fetchProductById(id);
       if (p) {
         const result = await toggleWishlist(p);
         if (result?.loginRequired) { showLoginRequiredModal(); return; }
-        e.currentTarget.classList.toggle('active', result);
-        e.currentTarget.querySelector('i').className = result ? 'fas fa-heart' : 'far fa-heart';
+        btn.classList.toggle('active', result);
+        btn.querySelector('i').className = result ? 'fas fa-heart' : 'far fa-heart';
         showToast(result ? 'Added to wishlist' : 'Removed from wishlist', 'success');
       }
     });
