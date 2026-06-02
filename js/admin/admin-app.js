@@ -7,6 +7,7 @@ import { renderAdminProducts }  from './pages/admin-products.js';
 import { renderAdminOrders }    from './pages/admin-orders.js';
 import { renderAdminRefunds }   from './pages/admin-refunds.js';
 import { renderAdminMessages }  from './pages/admin-messages.js';
+import { renderAdminSettings }  from './pages/admin-settings.js';
 
 // ============ TOAST ============
 export const showAdminToast = (msg, type = '') => {
@@ -35,6 +36,7 @@ const routes = [
   { pattern: /^\/orders$/,    handler: renderAdminOrders,    requiresAdmin: true },
   { pattern: /^\/refunds$/,   handler: renderAdminRefunds,   requiresAdmin: true },
   { pattern: /^\/messages$/,  handler: renderAdminMessages,  requiresAdmin: true },
+  { pattern: /^\/settings$/,  handler: renderAdminSettings,  requiresAdmin: true },
 ];
 
 const router = async () => {

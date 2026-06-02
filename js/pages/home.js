@@ -2,6 +2,7 @@ import { fetchProducts, fetchProductById, formatPrice } from '../products.js';
 import { addToCart } from '../cart.js';
 import { toggleWishlist, isInWishlist } from '../wishlist.js';
 import { showToast } from '../app.js';
+import { supabase } from '../supabase.js';
 
 export const renderHome = async (root) => {
   root.innerHTML = `
@@ -97,8 +98,17 @@ export const renderHome = async (root) => {
   bindGridActions(root);
 };
 
-const startCountdown = (root) => {
-  const target = new Date(Date.now() + 39 * 24 * 60 * 60 * 1000);
+const startCountdown = async (root) => {
+  const { data } = await supabase
+    .from('settings')
+    .select('value')
+    .eq('key', 'offer_end_date')
+    .single();
+
+  const target = data?.value
+    ? new Date(data.value)
+    : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+
   const dEl = root.querySelector('#cd-days');
   const tEl = root.querySelector('#cd-timer');
   const tick = () => {
