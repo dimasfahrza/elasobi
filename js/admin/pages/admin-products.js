@@ -214,6 +214,7 @@ const renderTable = (root, products) => {
     <table class="admin-table">
       <thead>
         <tr>
+          <th style="width:36px;text-align:center;">#</th>
           <th style="width:52px;"></th>
           <th>Name</th>
           <th>Category</th>
@@ -226,8 +227,9 @@ const renderTable = (root, products) => {
         </tr>
       </thead>
       <tbody>
-        ${products.map(p => `
+        ${products.map((p, i) => `
           <tr data-id="${p.id}">
+            <td style="text-align:center;color:var(--admin-text-muted);font-size:13px;">${i + 1}</td>
             <td>
               <img src="${p.image_url || ''}" alt="${p.name}"
                 style="width:42px;height:42px;object-fit:cover;border-radius:6px;border:1px solid var(--admin-border);"
