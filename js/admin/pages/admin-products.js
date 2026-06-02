@@ -572,10 +572,11 @@ const bindDeleteModal = (root) => {
     }
 
     showAdminToast('Product deleted', 'success');
+    const deletedId = deleteId;
     closeDeleteModal(root);
 
     // Remove from local array without re-fetching
-    allProducts = allProducts.filter(p => p.id !== deleteId);
+    allProducts = allProducts.filter(p => p.id !== deletedId);
     renderTable(root, allProducts);
     root.querySelector('#prod-search').dispatchEvent(new Event('input'));
   });
